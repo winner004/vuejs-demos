@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<input type="checkbox" v-model="seen" >
+		<h1 v-if="seen" v-demo>{{message}}</h1>
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script>
+			Vue.directive('demo', {
+		  
+		  bind(el,binding){
+		  	el.timer=setInterval(function(){
+		  		console.log(1)
+		  	},1000)
+		  		console.log(el)
+		  },
+		  // 被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+		  // 如果你需要操作指令的父元素，则最起码写的到这个inserted中 
+		  inserted(){
+		  			console.log('inserted')
+		  },
+		  update(){
+		  			
+		  },
+		  componentUpdated(){
+		  			
+		  },
+		  unbind(el,binding){
+		  	window.clearInterval(el.timer)
+		  			console.log('unbind')
+		  }
+		})
+
+		const app=new Vue({
+			data:{
+				message:'hh',
+				seen:true
+			}
+		}).$mount('#app')
+	</script>
+</body>
+</html>

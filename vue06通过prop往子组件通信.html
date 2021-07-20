@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+</style>
+<body>
+<div id="app"></div>
+<!--1.引包-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    //全局组件  第一个参数是组件的名字  第二个参数是配置参数options
+    //1.Parent 2.Child
+
+    Vue.component('Child',{
+        template:'<div><p>我是一个孩子组件</p>' +
+        '<input type="text" v-model="childData" @input="changeValue(childData)"/>'+
+        '</div>'
+        ,
+        props:['childData'],
+        methods:{
+            changeValue(val){
+//                自定义的事件一定通过 $emit() 去触发
+//                $emit(自定义的事件名，消息)
+                this.$emit('childHandlerr',val)
+            }
+        }
+    });
+    //父===》子
+    //1.先给父组件中绑定自定义的属性
+    //2.在子组件中使用prop接收父组件传递的数据
+    //3.可以在子组件中任意使用
+
+
+    //子===》父
+    //1.在父组件中绑定自定义的属性
+    //2.在子组件中触发原生的事件 在函数在使用$emit触发自定义的childHandler
+// v-model改变传递的数据报警告了！！！
+
+    Vue.component('Parent',{
+
+        data(){
+            return{
+                msg:"我是父组件的数据"
+            }
+        },
+        template:'<div><p>我是一个父组件</p>' +
+        '<Child :childData="msg" @childHandlerr="childHandler"/>' +
+        '</div>',
+        methods:{
+            childHandler(val){
+                console.log(val);
+            }
+        }
+    });
+
+
+    var App={
+        template:'<div>' +
+        '<Parent/>' +
+        '</div>'
+//        components:{
+//            Parent
+//        }
+    };
+
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+
+
+            }
+        },
+        //挂载子组件
+        components: {
+            App
+        },
+        //父组件直接可以使用
+        template:'<App/>'
+
+    });
+
+
+</script>
+
+</body>
+</html>

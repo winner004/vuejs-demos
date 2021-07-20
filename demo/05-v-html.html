@@ -1,0 +1,26 @@
+<meta charset="UTF-8">
+	<title>vue-</title>
+</head>
+<body>
+	<div id="app">
+		<!-- 转译输出 -->
+		<div>
+		{{rawHtml}}
+	   </div>
+		<!-- 渲染THML -->
+		<div v-html="rawHtml"></div>
+
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script>
+		const app = new Vue({
+			data: {
+				message:'hell vue',  //不要忘记逗号,  !!!
+				//在HTML字符串中不能使用Vue的语法特性
+				//rawHtml:'<h1>hello world</h1>'
+				rawHtml:'<h1>hello {{message}} world</h1>'
+			}
+		}).$mount('#app')
+	</script>
+</body>
+</html>

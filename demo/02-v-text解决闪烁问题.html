@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+		<title>vue-</title>
+	</head>
+	<body>
+		<div id="app">
+			<h1>{{message}}</h1>
+			<h1>{{message}}</h1>
+			<h1>{{message}}</h1>
+			<h1>{{message}}</h1>
+			<br>
+			<hr>	
+			<!-- v-text解决{{}}表达式闪烁的问题 
+				由于{{}}比较多，如果使用V-text比较麻烦，所以vue提供了一个指令v-cloak
+			-->
+			<h1 v-text="message"></h1>
+			<h1 v-text="message"></h1>
+			<h1 v-text="message"></h1>
+			<h1 v-text="message"></h1>
+
+
+		</div>
+		<script src="../node_modules/vue/dist/vue.js"></script>
+		<script>
+			const app = new Vue({
+				data:{
+					message:'hi'
+				}
+			}).$mount('#app')
+		</script>
+		<script src="../node_modules/vue/dist/vue.js"></script>
+	</body>
+	</html>

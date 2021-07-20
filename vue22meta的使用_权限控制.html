@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <router-link to="/home">我是首页</router-link>
+    <router-link to="/blog">我是博客</router-link>
+    <!--<router-link to="/login">登陆</router-link>-->
+    <a href="javascript:void(0)">推出</a>
+
+    <router-view></router-view>
+</div>
+<!--1.引入vue模块-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<!--2.引入vue-router模块-->
+<script type="text/javascript" src="./router/node_modules/vue-router/dist/vue-router.js"></script>
+<script type="text/javascript">
+
+    //    提醒一下，当使用路由参数时，例如从 /timeline/frontend 导航到 /timeline/backend，原来的组件实例会被复用。
+    //    因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。不过，这也意味着组件的生命周
+    //    期钩子不会再被调用。
+    Vue.use(VueRouter);
+    var Home={
+        template:'<div>我是首页</div>'
+
+    };
+    var Blog={
+        template:'<div>我是博客</div>'
+
+    }
+    var Login={
+        data(){
+            return{
+                name:'',
+                pwd:''
+            }
+        },
+        methods:{
+            loginHandle(){
+                //
+                localStorage.setItem("user",{name:this.name,pwd:this.pwd})
+                // 跳转到博客页面
+                // 编程式导航
+                this.$router.push({
+                    name:'blog'
+                })
+            }
+
+        },
+        template:'<div>'
+        +'<input type="text" v-model="name"/>'
+        +'<input type="password" v-model="pwd"/>'
+        +'<input type="button" value="登陆" @click="loginHandle"/>'
+        +'</div>'
+
+    };
+
+
+    var router = new VueRouter({
+
+        routes:[
+            //路由匹配规则
+            {
+                path:"/",
+                redirect:'home'
+            },
+            {
+                path:"/home",
+                component:Home
+            },
+            {
+                path:"/blog",
+                component:Blog,
+                name:"blog",
+                //给未来的路由做权限控制
+                meta:{
+                  //auth参数 证明 用户访问该组件的时候需要登陆
+                    auth:true
+                }
+            },
+            {
+                path:"/login",
+                component:Login
+            },
+        ]
+    });
+    // router.beforeEach((to, from, next)是全局守卫;watch是组件内部的监听。
+    router.beforeEach((to, from, next) => {
+       console.log(to);
+       console.log(from);
+       if(to.meta.auth){
+           //用户点击了博客链接 表示该用户需要登陆
+           if(localStorage.getItem("user")){
+               //用户已经登陆
+               next();
+           }else {
+               //用户需要登陆
+               next(
+                   { path:'/login'}
+               )
+           }
+
+       }else {
+           //直接放行  如果不调用next(),代码会卡住
+           next();
+
+       }
+    })
+
+    var App={
+        template:'<div>'
+        +'<router-link to="/home">首页</router-link>'
+        +'<router-link to="/blog">我的博客</router-link>'
+        +'<router-link to="/login">登陆</router-link>'
+        +'<keep-alive><router-view></router-view></keep-alive>'
+        +'</div>'
+    };
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+
+            }
+        },
+        components:{
+            App
+        },
+        // 6.交给Vue实例化对象管理router
+        router,
+        template:'<App/>'
+    })
+
+</script>
+
+</body>
+</html>

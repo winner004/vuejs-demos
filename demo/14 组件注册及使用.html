@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{
+			width: 100px;
+			height: 100px;
+			background-color: pink;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<h1>{{message}}</h1>
+		<my-component></my-component>
+		<br>
+		<!-- 组件可以复用但是互补影响 -->
+		<my-component></my-component>
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<!-- 把type指定为text/x-template 
+		起一个id-->
+	<script type="text/x-template" id="hello-world-template">
+  <p>Hello hello hello</p>
+</script>
+	<script>
+		// 1.先定义（注册）组件
+	    // 2.使用
+	    // 3.组件模板template
+	    // 注意：组件只能有一个根元素,否则警告报错
+	    //  3.1template可以是字面量字符串，缺点是没有高亮，内置在js中，写起来麻烦
+	    //  3.2template可以写在script标签中，虽然解决了高亮问题但是也麻烦
+	    //  3.3以上方式都不好，最终解决方案是使用Vue的.vue单文件组件来写，但是要想使用这种方式必须结合一些构建工具
+	    //  4.组件就是独立的作用域，就像我们node中的js模块一样，独立的  
+	    //  5.组件其实就是一个特殊的Vue实例，可以有自己的data、methods，computed、watch等等选项
+	    //  6.组件data必须是方法
+	    //  方法中返回一个对象作为组件的data
+	    Vue.component('my-component',{
+	    	//根元素有两个是错误写法
+	    	// template:'<h1>hh</h1><h2>jj</h2>' 
+	   
+	    	template:`
+				<div>
+				<h1>hh</h1>
+				<h2>{{message}}</h2>
+				<input type="checkbox" v-model="checked"/>
+				<div class="box" v-if="checked"></div>
+				</div>`,
+	    	data(){
+				return{
+					message:'aaa',
+					checked:true
+				}
+	    	},
+	    	methods:{
+
+	    	}
+	   
+
+	   // template:'#hello-world-template'
+	    })
+
+
+
+
+		const app=new Vue({
+			data:{
+				message:'hi'
+			}
+		}).$mount('#app')
+	</script>
+</body>
+</html>

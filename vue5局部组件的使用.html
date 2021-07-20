@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    .Vaside{
+        float: left;
+    }
+    .Vcontent{
+        float: right;
+    }
+</style>
+<body>
+<div id="app"></div>
+<!--1.引包-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    //全局组件  第一个参数是组件的名字  第二个参数是配置参数options
+    Vue.component('Vbtn',{
+        template:'<button>按钮</button>'
+    });
+    var Vheader = {
+        //组件内的data一定是个函数
+        data(){
+            return{
+
+            }
+        },
+        template:'<div>我是头部组件</div>',
+        methods:{}
+    };
+    var Vaside = {
+        template:'<div>我是侧边栏组件' +
+                    '<Vbtn/>'+
+                    '</div>'
+
+    };
+    var Vcontent = {
+        template:'<div>我是内容组件' +
+                        '<Vbtn/>' +
+                        '<Vbtn/>' +
+                        '<Vbtn/>' +
+                    '</div>'
+    };
+    var App={
+        template:'<div>' +
+                        '<Vheader/>' +
+                        '<div>' +
+                            '<Vaside class="Vaside"/>' +
+                            '<Vcontent class="Vcontent"/>' +
+                        '</div>' +
+                    '</div>',
+        components:{
+            Vheader,
+            Vaside,
+            Vcontent
+        }
+    }
+
+   new Vue({
+        el:'#app',
+        data(){
+            return{
+
+
+            }
+        },
+        //挂载子组件
+        components: {
+            App
+        },
+        //父组件直接可以使用
+        template:'<App/>'
+
+    });
+
+
+</script>
+
+</body>
+</html>

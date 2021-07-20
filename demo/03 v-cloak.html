@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+		<title>vue-</title>
+		<style>
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 浏览器在解析的过程中，发现具有v-cloakd的属性隐藏不显示（style中有设置），所以看不见{{}}闪烁的问题，
+			当Vue解析替换之后，vue会自动把V-cloak样式移除
+		  -->
+		<div id="app" v-cloak>
+			<h1>{{message}}</h1>
+			<h1>{{message}}</h1>
+			<h1>{{message}}</h1>
+			<h1>{{message}}</h1>
+			
+
+
+		</div>
+		<script src="../node_modules/vue/dist/vue.js"></script>
+		<script>
+			const app = new Vue({
+				data:{
+					message:'hi'
+				}
+			}).$mount('#app')
+		</script>
+		<script src="../node_modules/vue/dist/vue.js"></script>
+	</body>
+	</html>

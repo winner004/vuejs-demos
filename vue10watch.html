@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+</style>
+<body>
+<div id="app">
+    <input type="text" v-model="msg">
+    <h3>{{msg}}</h3>
+    <h3>{{stus[0].name}}</h3>
+    <button @click="stus[0].name='rose'">改变</button>
+</div>
+<!--1.引包-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                msg:'',
+                stus:[{name:"jack"}]
+            }
+        },
+        // 总结一句话：watch监听的是单个属性
+        //基本的数据类型是简单监视  复杂的数据类型是深度监视
+        watch:{
+            msg:function(newV,oldV){
+                console.log(newV,oldV);
+                if(newV==="tu"){
+                    console.log("是tu");
+                }
+            },
+//            监听复杂数据类型 object  array要深度监视
+            stus:{
+                deep:true,//深度监视
+                handler:function(newV,oldV){
+                    console.log(newV[0].name);
+
+               }
+                // immediate: true   //一开始就让他最初绑定的时候就执行handler方法
+            }
+        }
+
+    });
+
+
+</script>
+
+</body>
+</html>

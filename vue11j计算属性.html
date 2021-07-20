@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        list-style: none;
+    }
+    img{
+        width: 200px;
+        height: 300px;
+    }
+    ul li.active{
+        background-color: aqua;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+<div id="app">
+   <img :src="getCurrentImgsrc"/>
+    <ul>
+        <li v-for="(item,index) in list" @click="clickHandler(index)" :class="{active:currentIndex==index}">
+            <h2>{{item.id}}-图片名：{{item.name}}</h2>
+            <p>作者:{{item.writer}}</p>
+        </li>
+    </ul>
+</div>
+<!--1.引包-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    var list=[
+        {id:1,name:"t1",writer:"zhang1",tusrc:"./static/1-1.png"},
+        {id:2,name:"t2",writer:"zhang2",tusrc:"./static/1-2.png"},
+        {id:3,name:"t3",writer:"zhang3",tusrc:"./static/1-3.png"},
+        {id:4,name:"t4",writer:"zhang4",tusrc:"./static/1-4.png"},
+        {id:5,name:"t5",writer:"zhang5",tusrc:"./static/1-5.png"}
+    ]
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                list:list,
+                currentIndex:0
+            }
+        },
+        computed:{
+            // 计算属性默认只有getter   //setter也可以
+            getCurrentImgsrc:function(){
+                return this.list[this.currentIndex].tusrc
+            }
+        },
+        methods:{
+            clickHandler(index){
+
+                this.currentIndex=index
+
+            }
+        }
+
+    });
+
+
+</script>
+
+</body>
+</html>

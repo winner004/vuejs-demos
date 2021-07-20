@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{
+			background-color: pink;
+		}
+		.box1{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<h1 v-my-bind:title="123">{{message}}</h1>
+		<input type="checkbox" v-model="toggleBox">
+		<input type="checkbox" v-model="toggleBox1">
+		<div v-my-bind:class="{box: toggleBox,box1:toggleBox1}">vue</div>
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script>
+		// v-bind:class="{}"
+		// v-bnid:class="xxx"
+		Vue.directive('my-bind',function(el,binding){
+			if(binding.arg==='class'){
+				for(let key in binding.value){
+					if(binding.value[key]){
+						// 作用类名
+						el.classList.add(key)
+				    }else{
+				    	el.classList.remove(key)
+				    }
+
+			   }
+			}else{
+				el.setAttribute(binding.arg, binding.value)	
+			}
+		
+		}) 
+		const app=new Vue({
+			data:{
+				message:'hhh',
+				toggleBox:true,
+				toggleBox1:true
+			}
+		}).$mount('#app')
+	</script>
+</body>
+</html>

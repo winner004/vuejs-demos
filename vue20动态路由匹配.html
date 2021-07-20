@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app"></div>
+<!--1.引入vue模块-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<!--2.引入vue-router模块-->
+<script type="text/javascript" src="./router/node_modules/vue-router/dist/vue-router.js"></script>
+<script type="text/javascript">
+
+//    提醒一下，当使用路由参数时，例如从 /timeline/frontend 导航到 /timeline/backend，原来的组件实例会被复用。
+//    因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。不过，这也意味着组件的生命周
+//    期钩子不会再被调用。
+
+    var Timeline={
+        template:'<div id="timeline">' +
+        '<router-link :to="{name:\'comDesc\',params:{id:\'frontend\'}}">前端</router-link>' +
+        '<router-link :to="{name:\'comDesc\',params:{id:\'backend\'}}">后端</router-link>' +
+        '<router-view></router-view>' +
+        '</div>'
+    };
+    var Pins={
+        template:'<div>我是沸点</div>'
+
+
+    };
+    var ComDesc={
+        template:'<div>我是{{msg}}</div>',
+        created(){
+            //抛出来两个对象 挂载Vue实例化对象
+            this.msg='frontend';
+        },
+        watch:{
+            '$route'(to,from){
+
+                console.log(to.params.id);
+                //!!!!!!!!!!!!!!!!传不过去msg
+                this.msg=to.params.id
+            }
+        }
+        // beforeRouteUpdate(to, from, next) {
+        //     this.msg=to.params.id;
+        //             console.log(to.params.id)
+        // }
+
+    };
+
+//路由组件传参参考官网详细例子
+
+
+    var router = new VueRouter({
+        // 5.配置路由对象
+        // mode:'history',   //在服务器与脚手架下用 去掉hash丑丑的#
+        routes:[
+            //路由匹配规则
+            {
+                //动态路由参数 以冒号开头
+                path:"/timeline",
+                component:Timeline,
+                children: [{
+                    name: 'comDesc',
+                    path: '/timeline/:id',
+                    component: ComDesc
+                }
+                ]
+            },
+            {
+                //动态路由参数 以冒号开头
+                path:"/pins",
+                component:Pins
+            }
+        ]
+    });
+
+    var App={
+        template:'<div>'
+        +'<router-link to="/timeline">首页</router-link>'
+        +'<router-link to="/pins">沸点</router-link>'
+        +'<router-view></router-view>'
+        +'</div>'
+    };
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+
+            }
+        },
+        components:{
+            App
+        },
+        // 6.交给Vue实例化对象管理router
+        router,
+        template:'<App/>'
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.done{
+			text-decoration: line-through;
+			color:#ccc;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<h1>TODOS</h1>
+		<!-- filter 
+			var arr=[1,2,3,4,8]
+			arr.filter(function(item){return item%2===0})
+			遍历返回数组中除以二等于0的值，并返回一个数组 
+			
+
+			{{todos.filter(item=>!item.done).length} 
+			遍历出为false的值的个数
+		 -->
+			<p>{{todos.filter(item =>!item.done).length}} of {{todos.length}} remaning[archive]</p>
+			<!-- archive 归档  把已完成的部分删除 -->
+		<p v-for="(item,index) in todos">
+		<input type="checkbox" v-model="item.done">
+		<!-- v-bind可以用来动态的绑定属性至
+			class给了一个对象：
+			对象的key就是类名
+			对象的value就是布尔值  
+			当布尔值为true作用这个这个key样式
+		    当布尔值为false去除这个key样式-->
+		<span v-bind:class="{done: item.done}">{{item.title}}</span><button @click="handleremoveclick(index)">X</button>
+		</p>
+		<input type="text" v-model="todoText" @keydown.enter="handleTTodosClick"><button v-on:click="handleTTodosClick">Add</button>
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script>
+		const todos=[
+			{
+				id:1,
+				title:'吃饭',
+				done:true
+			},
+			{
+				id:2,
+				title:'睡觉',
+				done:false
+			},
+			{
+				id:3,
+				title:'打豆豆',
+				done:true
+			}
+		]
+
+		const app=new Vue({
+			el:'#app',
+			data: {
+				todos,
+				todoText:''
+
+			},
+			methods:{
+				handleTTodosClick(){
+					const todoText=this.todoText.trim()
+					if(!todoText.length){
+						return
+					}
+
+					const todos=this.todos
+					     todos.push({
+						id:todos[todos.length-1].id+1,
+						title:todoText,
+						done:false
+					})
+
+					//添加todo完成，清空文本框
+					this.todoText=''
+				},
+				handleremoveclick(index){
+						this.todos.splice(index,1)//从这个索引开始删除一个
+				} 
+
+			}
+		})
+	</script>
+</body>
+</html>

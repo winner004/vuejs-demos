@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<!-- 1.安装element组件库 npm i element-ui
+	2.引入组件库得css样式
+	3.引入vue
+	4.导入element-ui组件库的js脚本
+
+
+ -->
+ 	<link rel="stylesheet" href="node_modules/element-ui/lib/theme-chalk/index.css">
+<body>
+	<div id="app">
+		<!-- 组件封装了一个自定义Html标签 -->
+				<el-rate
+		  v-model="value3"
+		  show-text>
+		</el-rate>
+		<button @click="handleclick">弹出用户评分</button>
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script src="node_modules/element-ui/lib/index.js"></script>
+	<script>
+		new Vue({
+			el:'#app',
+			data:{
+				value3: null
+			},
+			methods:{
+				handleclick(){
+					window.alert(this.value3)
+				}
+			}
+
+		})
+		
+	</script>
+</body>
+</html>

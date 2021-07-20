@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{
+			background-color: pink;
+			width: 200px;
+			height: 100px;  
+		}
+	</style>
+</head>
+<body>
+	<!-- v-if会根据条件进行渲染和不渲染
+		值为true渲染DOM
+		值为false不渲染DOM
+	 -->
+	<div id="app">
+		<input type="checkbox" v-model="seen">
+		<div class="box" v-if="seen">	
+		</div>
+
+		<hr>
+
+     <!-- v-show对DOM元素都会进行渲染，
+		只是css条件的显示和隐藏
+	 -->
+        <input type="checkbox" v-model="seen">
+		<div class="box" v-show="seen">	
+		</div>
+
+<!-- 所以频繁切换用v-show，不频繁切换用v-if-->
+
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script>
+		const app=new Vue({
+			data:{
+					seen:true
+			}
+		}).$mount('#app')
+	</script>
+</body>
+</html>

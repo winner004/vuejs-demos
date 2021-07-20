@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+</style>
+<body>
+<div id="app"></div>
+<!--1.引包-->
+<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    Vue.component('myli',{
+        template:
+        '<li>' +
+        '预留的第一个坑' +
+        '<slot name="two"></slot>' +
+        '预留的第二个坑' +
+        '<slot name="three"></slot>' +
+//          style.textOverflow='ellipsis'
+        '</li>'
+
+    })
+    var App={
+        template:'<div>' +
+        '<ul>' +
+        '<myli>' +
+        '<h2 slot="three">我是第一个坑</h2>' +
+        '<h3 slot="two">我是第二个坑</h3>' +
+        '</myli>' +
+
+        '</ul>' +
+        '</div>',
+        components:{
+
+        }
+    }
+
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+            }
+        },
+        //挂载子组件
+        components: {
+            App
+        },
+        //父组件直接可以使用
+        template:'<App/>'
+
+    });
+
+
+</script>
+
+</body>
+</html>

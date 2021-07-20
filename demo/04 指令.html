@@ -1,0 +1,27 @@
+<meta charset="UTF-8">
+	<title>vue-</title>
+</head>
+<body>
+	<div id="app">
+		<!-- v-if 条件渲染
+			v-for 列表渲染  
+			v-on 注册事件    简写@
+			v-bind 属性绑定  简写：
+			v-once 只绑定一次  没有属性值
+			v-html 绑定输出HTML
+			 -->
+		<h1>{{message}}</h1>
+	</div>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script>
+		const app = new Vue({
+			data:{
+				message:'hell vue'
+			},
+			methods:{
+
+			}
+		}).$mount('#app')
+	</script>
+</body>
+</html>
